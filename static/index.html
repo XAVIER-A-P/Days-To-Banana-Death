@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🍌 Days to Banana Death</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --yellow: #FFD700; --brown: #5D4037; --bg: #FFF9C4; }
+        body { font-family: 'Quicksand', sans-serif; background-color: var(--bg); color: var(--brown); text-align: center; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        h1 { font-family: 'Fredoka One', cursive; margin-bottom: 5px; font-size: 1.8rem; color: #F57F17; }
+        
+        /* Camera Frame */
+        .cam-wrapper { position: relative; width: 100%; max-width: 320px; border-radius: 20px; overflow: hidden; border: 4px solid var(--yellow); background: #000; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        video, canvas { width: 100%; display: block; }
+        
+        /* Scanner Animation */
+        .scanner { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #00FF00; box-shadow: 0 0 10px #00FF00; opacity: 0; transition: opacity 0.3s; }
+        .scanning .scanner { opacity: 1; animation: scan 1.5s infinite linear; }
+        @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+
+        /* Button */
+        .btn { background: var(--yellow); color: var(--brown); border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; margin-top: 25px; cursor: pointer; font-family: 'Fredoka One', cursive; box-shadow: 0 4px 0 #FBC02D; transition: all 0.1s; }
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+        .btn:disabled { background: #E0E0E0; color: #9E9E9E; box-shadow: none; cursor: not-allowed; }
+
+        /* Results */
+        #result-card { margin-top: 20px; background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 280px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); display: none; animation: popUp 0.4s ease-out; }
+        @keyframes popUp { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .days { font-size: 3rem; font-family: 'Fredoka One', cursive; line-height: 1; color: #F57F17; }
+        .msg { font-weight: bold; margin-top: 10px; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <h1>🍌 Banana Watch</h1>
+    <p style="font-size: 0.9rem; margin-top: 0;">AI Ripeness Predictor</p>
+
+    <div class="cam-wrapper" id="camBox">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <div class="scanner"></div>
+    </div>
+
+    <button class="btn" id="snapBtn">CHECK BANANA</button>
+
+    <div id="result-card">
+        <div style="font-size: 0.8rem; text-transform: uppercase; color: #999; letter-spacing: 1px;">Time Left</div>
+        <div class="days" id="daysVal">--</div>
+        <div style="font-size: 0.8rem; color: #999;">Days</div>
+        <div class="msg" id="msgVal">...</div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snapBtn = document.getElementById('snapBtn');
+        const camBox = document.getElementById('camBox');
+        const resultCard = document.getElementById('result-card');
+
+        // Start Camera
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(stream => { video.srcObject = stream; })
+            .catch(() => alert("Camera permission needed!"));
+
+        snapBtn.addEventListener('click', async () => {
+            // UI Animation
+            snapBtn.disabled = true;
+            snapBtn.innerText = "SCANNING...";
+            camBox.classList.add('scanning');
+            resultCard.style.display = 'none';
+
+            // Capture
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('file', blob, 'banana.jpg');
+
+                try {
+                    // Call API
+                    const res = await fetch('/predict', { method: 'POST', body: formData });
+                    const data = await res.json();
+                    
+                    // Show Result
+                    document.getElementById('daysVal').innerText = data.days_left;
+                    document.getElementById('msgVal').innerText = data.message;
+                    resultCard.style.display = 'block';
+                } catch (e) {
+                    alert("Server Error. Is the backend running?");
+                } finally {
+                    snapBtn.disabled = false;
+                    snapBtn.innerText = "CHECK BANANA";
+                    camBox.classList.remove('scanning');
+                }
+            }, 'image/jpeg');
+        });
+    </script>
+</body>
+</html>
