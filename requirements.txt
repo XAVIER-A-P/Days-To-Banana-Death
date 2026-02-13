@@ -3,4 +3,5 @@ uvicorn
 python-multipart
 pillow
 numpy
-tensorflow-cpu==2.15.0  # Crucial: Use CPU version for deployment
+tensorflow-cpu==2.16.1  # Crucial: Use CPU version for deployment
+keras==3.0.5
