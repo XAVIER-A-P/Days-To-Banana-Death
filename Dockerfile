@@ -17,6 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy app code and model
 COPY main.py .
 COPY banana_model.keras .
+COPY static ./static
 
 # Expose port
 EXPOSE 8000
