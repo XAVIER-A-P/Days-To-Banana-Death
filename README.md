@@ -41,7 +41,7 @@ This project was built to demonstrate an understanding of the **entire Machine L
 
 ## 📂 Project Structure
 
-\`\`\`text
+```
 ├── data/                         # Scripts and guidelines for data collection
 ├── training/                     # Jupyter notebooks and model training scripts
 │   ├── train.py                  # Model architecture and training pipeline
@@ -54,7 +54,7 @@ This project was built to demonstrate an understanding of the **entire Machine L
 │   ├── requirements.txt          # Explicit pip dependencies
 │   └── Dockerfile                # Production container instructions
 └── README.md
-\`\`\`
+```
 
 ---
 
