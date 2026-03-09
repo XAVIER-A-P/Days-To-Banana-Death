@@ -58,13 +58,6 @@ This project was built to demonstrate an understanding of the **entire Machine L
 
 ---
 
-## 💻 Running the Project Locally
-
-### Prerequisites
-* Python 3.9+
-* Docker (optional, but recommended)
----
-
 ## 🔮 Future Improvements
 * **Automated CI/CD:** Implement GitHub Actions to automatically lint code, run unit tests on the API, and push the latest Docker image to Render upon merges to `main`.
 * **Data Drift Monitoring:** Implement shadow logging to save user-uploaded bananas (with consent) to an S3 bucket to analyze real-world data distribution vs. training data.
