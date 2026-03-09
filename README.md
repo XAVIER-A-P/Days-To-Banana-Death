@@ -10,16 +10,6 @@
 
 Unlike standard classification tasks (e.g., "ripe" vs. "unripe"), this project tackles a **Continuous Regression Problem** requiring a custom data collection pipeline, efficient edge-friendly model selection, and a decoupled API architecture.
 
-<br>
-
-<p align="center">
-  <img src="assets/app_home.png" alt="Home Screen" width="250"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="assets/app_scanning.png" alt="Scanning Animation" width="250"/>
-  &nbsp;&nbsp;&nbsp;
-  <img src="assets/app_result.png" alt="Prediction Result" width="250"/>
-</p>
-
 ---
 
 ## 🏗️ System Architecture & Engineering Focus
