@@ -63,43 +63,6 @@ This project was built to demonstrate an understanding of the **entire Machine L
 ### Prerequisites
 * Python 3.9+
 * Docker (optional, but recommended)
-
-### Option 1: Using Docker (Recommended)
-1. Clone the repository:
-   \`\`\`bash
-   git clone https://github.com/YOUR_USERNAME/days-to-banana-death.git
-   cd days-to-banana-death/app
-   \`\`\`
-2. Build the Docker image:
-   \`\`\`bash
-   docker build -t banana-death-app .
-   \`\`\`
-3. Run the container:
-   \`\`\`bash
-   docker run -p 8000:8000 banana-death-app
-   \`\`\`
-4. Open your browser and navigate to \`http://localhost:8000\`.
-
-### Option 2: Using Python Virtual Environment
-1. Clone and enter the app directory:
-   \`\`\`bash
-   git clone https://github.com/YOUR_USERNAME/days-to-banana-death.git
-   cd days-to-banana-death/app
-   \`\`\`
-2. Create and activate a virtual environment:
-   \`\`\`bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   \`\`\`
-3. Install dependencies:
-   \`\`\`bash
-   pip install -r requirements.txt
-   \`\`\`
-4. Run the Uvicorn server:
-   \`\`\`bash
-   uvicorn main:app --reload
-   \`\`\`
-
 ---
 
 ## 🔮 Future Improvements
